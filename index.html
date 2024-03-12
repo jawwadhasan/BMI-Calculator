@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('backgroundimage.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .abc1 {
+            background-color: rgb(36, 33, 33); 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.7);
+            color: #fff;
+            border: 2px solid #007bff;
+            max-width: 407px;
+            width: 80%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button, a {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none; 
+            display: inline-block; 
+            margin-right: 10px; 
+        }
+
+        button:hover, a:hover {
+            background-color: #4e4848;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+       @media only screen and (max-width: 480px) {
+            .abc1 {
+                max-width: none; 
+                width: 90%; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="abc1">
+            <h1>BMI Calculator</h1>
+            <label for="">Gender:</label><br><br>
+            <input type="radio" name="Gender" value="male">
+            <label for="">Male</label><br>
+            <input type="radio" name="Gender" value="female">
+            <label for="">Female</label><br><br>
+            <label for="">Age:</label>
+            <input type="number" name="age" style="margin-right: 4px;">
+            <label for="">Weight (kg):</label>
+            <input type="number" name="wt">
+            <button type="button" onclick="cal()">Calculate</button>
+            <h2 id="output"></h2>
+            <a href="#" onclick="goBack()">Back</a>
+        </div>
+    </main>
+    <script>
+        var g = document.getElementsByName("Gender");
+        var a = document.getElementsByName("age")[0];
+        var w = document.getElementsByName("wt")[0];
+        var out = document.getElementById("output");
+
+        function cal() {
+            let gender;
+            for (let i = 0; i < g.length; i++) {
+                if (g[i].checked) {
+                    gender = g[i].value;
+                    break;
+                }
+            }
+            if (!gender) {
+                out.innerHTML = 'Please select a gender.';
+                return;
+            }
+            let age = parseInt(a.value);
+            let weight = parseInt(w.value);
+            if (isNaN(age) || isNaN(weight)) {
+                out.innerHTML = 'Invalid age or weight';
+                return;
+            }
+            let height = 1.75; 
+            let bmi = weight / (height * height);
+            let bmiCategory;
+            if (bmi < 18.5) {
+                bmiCategory = 'Underweight';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                bmiCategory = 'Normal weight';
+            } else if (bmi >= 25 && bmi < 30) {
+                bmiCategory = 'Overweight';
+            } else {
+                bmiCategory = 'Obese';
+            }
+            out.innerHTML = 'Your BMI is: ' + bmi.toFixed(2) + '<br>' + 'You are ' + bmiCategory;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
